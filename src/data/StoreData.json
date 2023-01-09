@@ -1,0 +1,78 @@
+{
+    "products": [
+        {
+            "name": "Product One",
+            "price":2000,
+            "description": "Dolore exercitation dolor deserunt id commodo fugiat et qui. Exercitation consectetur exercitation deserunt et esse nulla excepteur enim. Occaecat laborum nisi et Lorem in minim enim proident commodo anim. Esse elit sunt cupidatat consequat eu quis fugiat deserunt aliqua. Tempor magna quis dolore sint exercitation voluptate exercitation elit aliqua. Irure minim anim dolor ullamco fugiat proident irure nisi.",
+            "photo": {
+                "1": "https://via.placeholder.com/150",
+                "2": "https://via.placeholder.com/150",
+                "3": "https://via.placeholder.com/150",
+                "4": "https://via.placeholder.com/150",
+                "5": "https://via.placeholder.com/150"
+                },
+            "preview": "https://via.placeholder.com/150",
+            "id": "product-one"
+        },
+
+        {
+            "name": "Product Two",
+            "price":1500,
+            "description": "Dolore exercitation dolor deserunt id commodo fugiat et qui. Exercitation consectetur exercitation deserunt et esse nulla excepteur enim. Occaecat laborum nisi et Lorem in minim enim proident commodo anim. Esse elit sunt cupidatat consequat eu quis fugiat deserunt aliqua. Tempor magna quis dolore sint exercitation voluptate exercitation elit aliqua. Irure minim anim dolor ullamco fugiat proident irure nisi.",
+            "photo": {
+                "1": "https://via.placeholder.com/150",
+                "2": "https://via.placeholder.com/150",
+                "3": "https://via.placeholder.com/150",
+                "4": "https://via.placeholder.com/150",
+                "5": "https://via.placeholder.com/150"
+                },
+            "preview": "https://via.placeholder.com/150",
+            "id":"product-two"
+        },
+
+        {
+            "name": "Product Three",
+            "price":850,
+            "description": "Dolore exercitation dolor deserunt id commodo fugiat et qui. Exercitation consectetur exercitation deserunt et esse nulla excepteur enim. Occaecat laborum nisi et Lorem in minim enim proident commodo anim. Esse elit sunt cupidatat consequat eu quis fugiat deserunt aliqua. Tempor magna quis dolore sint exercitation voluptate exercitation elit aliqua. Irure minim anim dolor ullamco fugiat proident irure nisi.",
+            "photo": {
+                "1": "https://via.placeholder.com/150",
+                "2": "https://via.placeholder.com/150",
+                "3": "https://via.placeholder.com/150",
+                "4": "https://via.placeholder.com/150",
+                "5": "https://via.placeholder.com/150"
+                },
+            "preview": "https://via.placeholder.com/150",
+            "id": "product-three"
+        },
+
+        {
+            "name": "Product Four",
+            "price":320,
+            "description": "Dolore exercitation dolor deserunt id commodo fugiat et qui. Exercitation consectetur exercitation deserunt et esse nulla excepteur enim. Occaecat laborum nisi et Lorem in minim enim proident commodo anim. Esse elit sunt cupidatat consequat eu quis fugiat deserunt aliqua. Tempor magna quis dolore sint exercitation voluptate exercitation elit aliqua. Irure minim anim dolor ullamco fugiat proident irure nisi.",
+            "photo": {
+                "1": "https://via.placeholder.com/150",
+                "2": "https://via.placeholder.com/150",
+                "3": "https://via.placeholder.com/150",
+                "4": "https://via.placeholder.com/150",
+                "5": "https://via.placeholder.com/150"
+                },
+            "preview": "https://via.placeholder.com/150",
+            "id": "product-four"
+        },
+
+        {
+            "name": "Product Five",
+            "price":320,
+            "description": "Dolore exercitation dolor deserunt id commodo fugiat et qui. Exercitation consectetur exercitation deserunt et esse nulla excepteur enim. Occaecat laborum nisi et Lorem in minim enim proident commodo anim. Esse elit sunt cupidatat consequat eu quis fugiat deserunt aliqua. Tempor magna quis dolore sint exercitation voluptate exercitation elit aliqua. Irure minim anim dolor ullamco fugiat proident irure nisi.",
+            "photo": {
+                "1": "https://via.placeholder.com/150",
+                "2": "https://via.placeholder.com/150",
+                "3": "https://via.placeholder.com/150",
+                "4": "https://via.placeholder.com/150",
+                "5": "https://via.placeholder.com/150"
+                },
+            "preview": "https://via.placeholder.com/150",
+            "id": "product-five"
+        }
+    ]
+}
