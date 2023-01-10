@@ -13,12 +13,16 @@ function ProductCard(props?: ProductCard){
                     minWidth: '40vmin',
                     maxWidth: '60vmax',
                     margin: '5vmin',
+                    padding: '15px',
                 }}
             >
                 <Typography variant="h5">{props?.name}</Typography>
                 <Typography>{props?.price}</Typography>
                 {/* <Typography>{truncate(props?.description)}</Typography> */}
-                <Box component='img' src={props?.preview} />
+                <Box component='img' src={props?.preview}
+                    maxHeight="20vmax"
+                    borderRadius="25px"
+                    />
             </Card>
         </Link>
     )

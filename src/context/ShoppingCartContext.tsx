@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from "react"
+import ShoppingCart from "../components/ShoppingCart"
 
 type ShoppingCartProviderProps = {
     children: ReactNode
@@ -7,17 +8,17 @@ type ShoppingCartProviderProps = {
 type ShoppingCartContext = {
     openCart: () => void
     closeCart: () => void
-    getItemQuantity: (id: number) => number
-    increaseItemQuantity: (id: number) => void
-    decreaseItemQuantity: (id: number) => void
-    setItemQuantity: (id: number, quantity: number) => void
-    removeFromCart: (id: number) => void
+    getItemQuantity: (id: string) => number
+    increaseItemQuantity: (id: string) => void
+    decreaseItemQuantity: (id: string) => void
+    setItemQuantity: (id: string, quantity: number) => void
+    removeFromCart: (id: string) => void
     // cartQuantity: number
     cartItems: CartItem[]
 }
 
 type CartItem = {
-    id: number
+    id: string
     quantity: number
 }
 
@@ -40,11 +41,11 @@ export function ShoppingCartProvider({ children }:ShoppingCartProviderProps){
         setIsOpen(false);
     }
 
-    function getItemQuantity(id: number){
+    function getItemQuantity(id: string){
         return cartItems.find(item => item.id === id)?.quantity || 0;
     }
 
-    function setItemQuantity(id: number, quantity: number){
+    function setItemQuantity(id: string, quantity: number){
         setCartItems(currItems => {
             if(currItems.find(item => item.id === id) == null){
                 return [...currItems, {id, quantity}]
@@ -60,8 +61,9 @@ export function ShoppingCartProvider({ children }:ShoppingCartProviderProps){
         })
     }
 
-    function increaseItemQuantity(id: number){
+    function increaseItemQuantity(id: string){
         setCartItems(currItems => {
+            console.log("Increasing quantity of item: " + id)
             if(currItems.find(item => item.id === id) == null){
                 return [...currItems, {id, quantity: 1}]
             } else {
@@ -71,12 +73,12 @@ export function ShoppingCartProvider({ children }:ShoppingCartProviderProps){
                     } else {
                         return item
                     }
-                 })
-             }
+                })
+            }
         })
     }
 
-    function decreaseItemQuantity(id: number){
+    function decreaseItemQuantity(id: string){
         setCartItems(currItems => {
             if(currItems.find(item => item.id === id)?.quantity === 1){
                 return currItems.filter(item => item.id !== id)
@@ -87,12 +89,12 @@ export function ShoppingCartProvider({ children }:ShoppingCartProviderProps){
                     } else {
                         return item
                     }
-                 })
-             }
+                })
+            }
         })
     }
 
-    function removeFromCart(id: number){
+    function removeFromCart(id: string){
         setCartItems(currItems => {
             return currItems.filter(item => item.id !== id)
         })
@@ -101,6 +103,7 @@ export function ShoppingCartProvider({ children }:ShoppingCartProviderProps){
     return (
         <ShoppingCartContext.Provider value={{ getItemQuantity, increaseItemQuantity, decreaseItemQuantity, removeFromCart, setItemQuantity, openCart, closeCart, cartItems }}>
             {children}
+            <ShoppingCart isOpen={isOpen} cartItems={cartItems} />
         </ShoppingCartContext.Provider>
     )
 }

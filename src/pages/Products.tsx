@@ -12,23 +12,18 @@ function Products(){
     });
 
     useEffect(() => {
-        // let promiseData:Promise<any> = fetchData();
-
-        // promiseData.then((value) => {
-        //     setData(value);
-        // });
-
         setData(fetchData());
-
     }, []);
 
     if(data){
         return(
             <Grid
-                width="auto"
+                width="80%"
                 container
                 direction="row"
-                justifyContent="center"
+                marginTop="10vmin"
+                marginLeft="25vmin"
+                marginRight="25vmin"
             >
                 {
                     data.products.map((product) => {

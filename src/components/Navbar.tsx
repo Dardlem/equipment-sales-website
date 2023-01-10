@@ -3,11 +3,11 @@ import { Container } from "@mui/system";
 import * as React from "react";
 import AdbIcon from "@mui/icons-material/Adb"
 import MenuIcon from "@mui/icons-material/Menu"
-import { Link, Navigate } from "react-router-dom"
+import { Link, Navigate, NavLink } from "react-router-dom"
 import ShoppingCart from "@mui/icons-material/ShoppingCart"
 import { useShoppingCart } from "../context/ShoppingCartContext";
 
-const pages = ['Products', 'News', 'About'];
+const pages = ['Products', 'News', 'About', 'Help'];
 
 function Navbar() {
     const { openCart } = useShoppingCart();
@@ -21,6 +21,12 @@ function Navbar() {
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     }
+
+    let activeStyle = {
+        textDecoration: "underline"
+    }
+
+    let activeClassName = "underline";
 
     return(
         <>
@@ -75,22 +81,17 @@ function Navbar() {
                                 >
                                 {pages.map((page) => (
                                     <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                        <Link to={`/${page}`}>
+                                        <NavLink to={`/${page}`}>
                                             <Typography textAlign={"center"}>{page}</Typography>
-                                        </Link>
+                                        </NavLink>
                                     </MenuItem>
                                 ))}
-                                    {/* <MenuItem key={'cart'} onClick={openCart}>
-                                        <Typography textAlign={"center"}>Cart</Typography>
-                                    </MenuItem> */}
                             </Menu>
                         </Box>
                         <AdbIcon sx={{ display: {xs: 'flex', md: 'none'}, mr: 1 }} />
                         <Typography
                             variant="h5"
                             noWrap
-                            // component="a"
-                            // href=""
                             sx={{
                                 mr: 2,
                                 display: { xs: 'flex', md: 'none' },
@@ -108,22 +109,18 @@ function Navbar() {
                             <Grid container justifyContent="space-between">
                                 <Box display="flex">
                                     {pages.map((page) => (
-                                        <Link
+                                        <NavLink
+                                            style={({ isActive }) =>
+                                                isActive ? activeStyle : undefined}  ////STYLING FOR ACTIVE LINKS
                                             key={page}
                                             to={`/${page}`}
                                             onClick={handleCloseNavMenu}
                                         >
                                         <Typography sx={{ my: 2, color: 'white', paddingInline: "1vmin"}}>{page}</Typography>
-                                        </Link>
+                                        </NavLink>
                                     ))}
                                 </Box>
-                                {/* <Link
-                                    key={'cart'}
-                                    to={'/cart'}
-                                    onClick={handleCloseNavMenu}
-                                    >
-                                    <ShoppingCart />
-                                </Link> */}
+
                                 <IconButton onClick={openCart} sx={{color: 'white'}}>
                                         <ShoppingCart />
                                 </IconButton>
