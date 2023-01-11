@@ -14,7 +14,7 @@ enum CURRENCY{
     EUR = "€",
     UAH = "₴",
 }
-
+//960eur
 type CartItem = {
     id: string
     quantity: number
