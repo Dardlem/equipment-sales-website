@@ -1,29 +1,11 @@
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import bgvid from "../assets/video/background-smoke.mp4";
 import industrypic from "../assets/images/industry-img-isometric.jpg";
 import "../styles/LandingPage.css"
 
 function LandingPage() {
     return(
         <div id="perspective10">
-            <Box
-                id="backgroundVideo"
-                component="video"
-                position="absolute"
-                autoPlay
-                loop
-                muted
-                sx={{
-                    right: 0,
-                    bottom: 0,
-                    minHeight: "100%",
-                    minWidth: "100%",
-                    zIndex: -1,
-                }}
-            >
-                <source src={bgvid} />
-            </Box>
                 <Grid container direction="column" alignItems="center" justifyContent="center">
                     <Box component="div" width="100%" height="100vh">
                         <Typography variant="h1" textTransform="uppercase" fontWeight="900" color="whitesmoke" width="7em" margin="10% 6%">
