@@ -21,7 +21,6 @@ function App() {
           <Route path="/News" element={<News />} />
           <Route path="/About" element={<About />} />
           <Route path='/Help' element={<Help />} />
-          {/* <Route path="/Cart" element={<ShoppingCart />} /> */}
           {
             GenerateSubroutes()
           }
