@@ -11,7 +11,7 @@
                 "4": "https://via.placeholder.com/150",
                 "5": "https://via.placeholder.com/150"
                 },
-            "preview": "/src/data/img/Impress1000.JPEG",
+            "preview": "/img/Impress1000.JPEG",
             "id": "impress-1000"
         },
 
@@ -26,7 +26,7 @@
                 "4": "https://via.placeholder.com/150",
                 "5": "https://via.placeholder.com/150"
                 },
-            "preview": "/src/data/img/Moonlight250.JPEG",
+            "preview": "/img/Moonlight250.JPEG",
             "id":"moonlight-250"
         },
 
@@ -41,7 +41,7 @@
                 "4": "https://via.placeholder.com/150",
                 "5": "https://via.placeholder.com/150"
                 },
-            "preview": "/src/data/img/Dawn750.JPEG",
+            "preview": "/img/Dawn750.JPEG",
             "id": "dawn-750"
         },
 
@@ -56,7 +56,7 @@
                 "4": "https://via.placeholder.com/150",
                 "5": "https://via.placeholder.com/150"
                 },
-            "preview": "/src/data/img/Greenlight500.JPEG",
+            "preview": "/img/Greenlight500.JPEG",
             "id": "3"
         },
 
@@ -71,7 +71,7 @@
                 "4": "https://via.placeholder.com/150",
                 "5": "https://via.placeholder.com/150"
                 },
-            "preview": "/src/data/img/Dome1250.JPEG",
+            "preview": "/img/Dome1250.JPEG",
             "id": "4"
         }
     ]

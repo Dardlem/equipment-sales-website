@@ -1,10 +1,10 @@
 export interface ProductList{
-    [key: string]: ProductArray;
-    products: ProductArray;
+    [key: string]: ProductArray<Product>;
+    products: ProductArray<Product>;
 }
 
-export interface ProductArray extends Array<any> {
-    [key: number]: Product;
+export interface ProductArray<Product> {
+    [key: string]: Product;
 }
 
 export interface Product{

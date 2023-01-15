@@ -1,33 +1,32 @@
 import fetchData from "./fetch";
-import { ProductList } from "../interfaces";
+import { Product, ProductArray, ProductList } from "../interfaces";
 import { useEffect, useState } from "react";
 import { Route } from "react-router-dom";
 import ProductPage from "../components/ProductPage";
 
-function GenerateSubroutes(){
-    const [data, setData] = useState<ProductList>({
-        products: [],
-    });
-
-    useEffect(() => {
-        // let promiseData:Promise<any> = fetchData();
-
-        // promiseData.then((value) => {
-        //     setData(value);
-        // });
-
-        setData(fetchData());
-
-    }, []);
+function GenerateSubroutes(data: ProductArray<Product>){
+    // const [data, setData] = useState<ProductList>({
+    //     products: {
+    //         "product1": {
+    //             name: "default",
+    //             price: 0,
+    //             description: "default",
+    //             preview: "default.jpg"
+    //         }
+    //     }
+    // });
 
     let routes:Array<any> = [];
 
-    data.products.map((e) => {
-        return routes.push(
+    console.log(data);
+
+    Object.keys(data).map((key: string) => {
+    console.log(data[key])
+        routes.push(
             <Route
-                key={e.id}
-                path={`/Products/${e.id}`}
-                element={<ProductPage product={e} />} />
+                key={key}
+                path={`/Products/${key}`}
+                element={<ProductPage product={data[key]} />} />
         )
     })
 

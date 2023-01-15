@@ -2,20 +2,14 @@ import { Box, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import  fetchData from "../helpers/fetch";
 import ProductCard from "../components/ProductCard"
-import { ProductList } from "../interfaces"
+import { Product, ProductArray, ProductList } from "../interfaces"
 
 
 
-function Products(){
-    const [data, setData] = useState<ProductList>({
-        products: [],
-    });
+function Products(model: {data: ProductArray<Product>}){
+    console.log(model.data);
 
-    useEffect(() => {
-        setData(fetchData());
-    }, []);
-
-    if(data){
+    if(model.data){
         return(
             <Grid
                 width="80%"
@@ -25,18 +19,21 @@ function Products(){
                 marginLeft="25vmin"
                 marginRight="25vmin"
             >
+
+
                 {
-                    data.products.map((product) => {
+                    Object.keys(model.data).map((key: string) => {
                         return <ProductCard
-                                key={product.id}
-                                name = {product.name }
-                                price = { product.price }
-                                description = {product.description }
-                                preview = { product.preview }
-                                id = { product.id }
+                                key={key}
+                                name = {model.data[key].name }
+                                price = { model.data[key].price }
+                                description = {model.data[key].description }
+                                preview = { model.data[key].preview }
+                                id={key}
                             />
                     })
                 }
+
             </Grid>
         )
     }
