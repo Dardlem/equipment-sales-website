@@ -32,13 +32,8 @@ useEffect(() => {
   }
 }, [])
 
-
-
-// fetchData('products/').then((data) => setData(data));
-console.log(data);
-
   return (
-    <ShoppingCartProvider>
+    <ShoppingCartProvider data={data}>
       <BrowserRouter>
         <Navbar />
         <Routes>

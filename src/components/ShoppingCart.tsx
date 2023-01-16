@@ -6,6 +6,7 @@ import fetchData from "../helpers/fetch";
 import ProductCard from "./ProductCard";
 import { useEffect, useState } from "react";
 import DisplayCurrency from "../helpers/DisplayCurrency";
+import { Product, ProductArray, ProductList } from "../interfaces";
 
 const drawerWidth = 340;
 
@@ -23,25 +24,46 @@ type CartItem = {
 type ShoppingCartProps = {
     isOpen: boolean,
     cartItems: CartItem[],
+    data: ProductArray<Product>
 }
 
-function ShoppingCart({ isOpen, cartItems }: ShoppingCartProps){
+function ShoppingCart({ isOpen, cartItems, data }: ShoppingCartProps ){
     const [total, setTotal] = useState<number>(0)
     const { closeCart } = useShoppingCart();
 
+    console.log(data);
     let currentCurrency = CURRENCY.USD;
+
+    let buttonState = true;
 
     useEffect(() => {
         setTotal(getTotal());
     }, [cartItems])
 
+    const isCartEmpty = () => {
+        if(cartItems.length === 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     const getTotal = () => {
-        const data = fetchData();
         let total: number = 0;
 
-        cartItems.map((cartItem: CartItem) => {
-            total += data.products.find(product => product.id === cartItem.id)?.price! * cartItem.quantity
-        })
+        try{
+        console.log(data);
+            cartItems.map((cartItem: CartItem) => {
+                cartItem.quantity ? total += data[cartItem.id].price * cartItem.quantity : total += 0;
+            })
+
+            return total;
+        }
+        catch(e){
+            console.log(e);
+        }
+
         return total;
     }
 
@@ -70,7 +92,7 @@ function ShoppingCart({ isOpen, cartItems }: ShoppingCartProps){
                         Total: {DisplayCurrency(total, currentCurrency)}
                     </Typography>
                 </Box>
-                <Button>
+                <Button disabled={isCartEmpty()}>
                     Get your offer
                 </Button>
             </Grid>

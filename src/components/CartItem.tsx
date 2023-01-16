@@ -1,6 +1,5 @@
 import { Box, Card, Grid, IconButton, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import StoreData from "../data/StoreData.json"
 import fetchData from "../helpers/fetch";
 import { Product, ProductList } from "../interfaces";
 import { Cancel } from "@mui/icons-material"
@@ -22,13 +21,10 @@ function CartItem({id, quantity}: CartItemProps){
     });
 
     useEffect(() => {
-        let e = fetchData();
-
-        e.products.map((product) => {
-            if (product.id === id) {
-                setData(product);
-            }
-        })
+        let e = fetchData('products/' + id).then((data) => {
+            // if(data.id === id){
+                setData(data)}
+        );
 
     }, [])
 
@@ -54,8 +50,9 @@ function CartItem({id, quantity}: CartItemProps){
                             label={"Quantity"}
                             type="number"
                             defaultValue={quantity}
-                            InputProps={{
-                                readOnly: false
+                            inputProps={{
+                                readOnly: false,
+                                min: 1,
                             }}
                             sx={{
                                 width: '100%'

@@ -1,8 +1,10 @@
 import { createContext, ReactNode, useContext, useState } from "react"
 import ShoppingCart from "../components/ShoppingCart"
+import { Product, ProductArray, ProductList } from "../interfaces"
 
 type ShoppingCartProviderProps = {
     children: ReactNode
+    data: ProductArray<Product>
 }
 
 type ShoppingCartContext = {
@@ -29,7 +31,7 @@ export function useShoppingCart(){
     return useContext(ShoppingCartContext);
 }
 
-export function ShoppingCartProvider({ children }:ShoppingCartProviderProps){
+export function ShoppingCartProvider({ children, data }:ShoppingCartProviderProps ){
     const [isOpen, setIsOpen] = useState(false);
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
@@ -51,7 +53,7 @@ export function ShoppingCartProvider({ children }:ShoppingCartProviderProps){
                 return [...currItems, {id, quantity}]
             } else {
                 return currItems.map(item => {
-                    if (item.id === id) {
+                    if (item.id === id && quantity >= 0) {
                         return {...item, quantity}
                     } else {
                         return item
@@ -84,7 +86,7 @@ export function ShoppingCartProvider({ children }:ShoppingCartProviderProps){
                 return currItems.filter(item => item.id !== id)
             } else {
                 return currItems.map(item => {
-                    if (item.id === id) {
+                    if (item.id === id && item.quantity > 0) {
                         return { ...item, quantity: item.quantity - 1}
                     } else {
                         return item
@@ -103,7 +105,7 @@ export function ShoppingCartProvider({ children }:ShoppingCartProviderProps){
     return (
         <ShoppingCartContext.Provider value={{ getItemQuantity, increaseItemQuantity, decreaseItemQuantity, removeFromCart, setItemQuantity, openCart, closeCart, cartItems }}>
             {children}
-            <ShoppingCart isOpen={isOpen} cartItems={cartItems} />
+            <ShoppingCart isOpen={isOpen} cartItems={cartItems} data={data}/>
         </ShoppingCartContext.Provider>
     )
 }
