@@ -9,7 +9,6 @@ import { ShoppingCartProvider } from './context/ShoppingCartContext'
 import Help from './pages/Help'
 import fetchData from './helpers/fetch'
 import { useEffect, useState } from 'react'
-import { Product, ProductList } from './interfaces'
 
 
 function App() {

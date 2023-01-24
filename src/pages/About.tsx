@@ -5,7 +5,7 @@ function About(){
         <>
             <Box margin="10vmin">
                 <Typography variant="h1">
-                    This is a About page.
+                    Under construction.
                 </Typography>
             </Box>
         </>

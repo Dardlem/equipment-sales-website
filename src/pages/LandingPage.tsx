@@ -8,7 +8,7 @@ function LandingPage() {
         <div id="perspective10">
                 <Grid container direction="column" alignItems="center" justifyContent="center">
                     <Box component="div" width="100%" height="100vh">
-                        <Typography variant="h1" textTransform="uppercase" fontWeight="900" color="whitesmoke" width="7em" margin="10% 6%">
+                        <Typography variant="h1" textTransform="uppercase" fontWeight="900" color="orange" width="7em" margin="10% 6%">
                             We're a global company
                         </Typography>
                     </Box>

@@ -2,11 +2,9 @@ import { Box, Button, Drawer, Grid, IconButton, Typography } from "@mui/material
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import { Close } from "@mui/icons-material"
 import CartItem from "./CartItem";
-import fetchData from "../helpers/fetch";
-import ProductCard from "./ProductCard";
 import { useEffect, useState } from "react";
 import DisplayCurrency from "../helpers/DisplayCurrency";
-import { Product, ProductArray, ProductList } from "../interfaces";
+import { Product, ProductArray } from "../interfaces";
 
 const drawerWidth = 340;
 
@@ -15,7 +13,7 @@ enum CURRENCY{
     EUR = "€",
     UAH = "₴",
 }
-//960eur
+
 type CartItem = {
     id: string
     quantity: number
@@ -34,38 +32,26 @@ function ShoppingCart({ isOpen, cartItems, data }: ShoppingCartProps ){
     console.log(data);
     let currentCurrency = CURRENCY.USD;
 
-    let buttonState = true;
-
     useEffect(() => {
         setTotal(getTotal());
     }, [cartItems])
 
-    const isCartEmpty = () => {
-        if(cartItems.length === 0){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+    const isCartEmpty = cartItems.length === 0
+
 
     const getTotal = () => {
-        let total: number = 0;
+        let total = 0;
+        try {
+            return cartItems.reduce((total, cartItem) => {
+                return total + (cartItem.quantity ? data[cartItem.id].price * cartItem.quantity : 0);
+            }, 0);
 
-        try{
-        console.log(data);
-            cartItems.map((cartItem: CartItem) => {
-                cartItem.quantity ? total += data[cartItem.id].price * cartItem.quantity : total += 0;
-            })
-
-            return total;
-        }
-        catch(e){
+        } catch (e) {
             console.log(e);
         }
-
         return total;
-    }
+    };
+
 
     return (
         <Drawer
@@ -89,10 +75,10 @@ function ShoppingCart({ isOpen, cartItems, data }: ShoppingCartProps ){
                 </Box>
                 <Box>
                     <Typography>
-                        Total: {DisplayCurrency(total, currentCurrency)}
+                        Estimated price: {DisplayCurrency(total, currentCurrency)}
                     </Typography>
                 </Box>
-                <Button disabled={isCartEmpty()}>
+                <Button disabled={isCartEmpty}>
                     Get your offer
                 </Button>
             </Grid>

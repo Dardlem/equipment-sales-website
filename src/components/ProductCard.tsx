@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import { ProductCard } from "../interfaces";
 
 
-function ProductCard(props?: ProductCard){
+function ProductCard(props: ProductCard){
 
     return(
-        <Link to={`/Products/${props?.id}`}>
+        <Link to={`/Products/${props.id}`}>
             <Card
                 sx={{
                     minWidth: '40vmin',

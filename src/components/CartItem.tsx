@@ -1,7 +1,7 @@
 import { Box, Card, Grid, IconButton, TextField, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import fetchData from "../helpers/fetch";
-import { Product, ProductList } from "../interfaces";
+import { Product } from "../interfaces";
 import { Cancel } from "@mui/icons-material"
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import DisplayCurrency from "../helpers/DisplayCurrency";
@@ -21,16 +21,26 @@ function CartItem({id, quantity}: CartItemProps){
     });
 
     useEffect(() => {
-        let e = fetchData('products/' + id).then((data) => {
-            // if(data.id === id){
+        fetchData('products/' + id).then((data) => {
                 setData(data)}
         );
 
-    }, [])
+    }, [id])
 
-    const subTotal = () => {
-        return quantity ? data.price * quantity : 0;
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = event.target.value;
+        if(newValue.indexOf('-') !== -1){
+            return;
+        }
+        if(parseInt(newValue) < 0 || parseInt(newValue) > 2000){
+            return;
+        }
+
+        setItemQuantity(id, parseInt(newValue, 10))
     }
+    const subTotal = useMemo(() => {
+        return quantity ? data.price * quantity : 0;
+    }, [quantity, data.price])
 
     return(
         <Card sx={{ margin: "20px 5px" }}>
@@ -49,16 +59,17 @@ function CartItem({id, quantity}: CartItemProps){
                             id="quantity-field"
                             label={"Quantity"}
                             type="number"
-                            defaultValue={quantity}
+                            value={quantity}
                             inputProps={{
                                 readOnly: false,
                                 min: 1,
+                                max: 2000,
                             }}
                             sx={{
                                 width: '100%'
                             }}
-                            onChange={(newValue) => { setItemQuantity(id, parseInt(newValue.target.value, 10)) }} />
-                        <Typography variant="body2">SubTotal: {DisplayCurrency(subTotal())}</Typography>
+                            onChange={handleChange} />
+                        <Typography variant="body2">SubTotal: {DisplayCurrency(subTotal)}</Typography>
                     </Grid>
                     <Grid container direction="row" flexShrink="2" flexWrap="nowrap" alignItems="center">
                         <Box component="img" src={`${data.preview}`}

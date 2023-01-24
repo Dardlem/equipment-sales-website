@@ -5,7 +5,7 @@ function News(){
         <>
             <Box margin="10vmin">
                 <Typography variant="h1">
-                    This is a News page.
+                    Under construction.
                 </Typography>
             </Box>
         </>

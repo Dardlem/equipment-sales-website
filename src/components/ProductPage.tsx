@@ -1,4 +1,4 @@
-import { Button, Grid, IconButton, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Product } from "../interfaces";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"

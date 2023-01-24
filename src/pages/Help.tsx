@@ -4,7 +4,7 @@ function Help(){
     return(
         <Grid margin="10vmin">
             <Typography>
-                HELP PAGE
+                HELP ME
             </Typography>
         </Grid>
     )

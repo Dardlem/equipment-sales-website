@@ -1,8 +1,6 @@
 import { Box, Grid, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import  fetchData from "../helpers/fetch";
 import ProductCard from "../components/ProductCard"
-import { Product, ProductArray, ProductList } from "../interfaces"
+import { Product, ProductArray } from "../interfaces"
 
 
 
