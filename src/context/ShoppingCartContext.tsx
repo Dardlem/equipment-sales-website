@@ -1,3 +1,4 @@
+
 import { createContext, ReactNode, useContext, useState } from "react"
 import ShoppingCart from "../components/ShoppingCart"
 import { Product, ProductArray } from "../interfaces"
@@ -15,7 +16,6 @@ type ShoppingCartContext = {
     decreaseItemQuantity: (id: string) => void
     setItemQuantity: (id: string, quantity: number) => void
     removeFromCart: (id: string) => void
-    // cartQuantity: number
     cartItems: CartItem[]
 }
 
@@ -65,7 +65,6 @@ export function ShoppingCartProvider({ children, data }:ShoppingCartProviderProp
 
     function increaseItemQuantity(id: string){
         setCartItems(currItems => {
-            console.log("Increasing quantity of item: " + id)
             if(currItems.find(item => item.id === id) == null){
                 return [...currItems, {id, quantity: 1}]
             } else {
