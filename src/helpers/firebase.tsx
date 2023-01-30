@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { get, getDatabase, ref, onValue } from "firebase/database";
+import { FirebaseApp, initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { get, getDatabase, ref, onValue, set } from "firebase/database";
+import { Product } from "../interfaces";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -20,10 +22,27 @@ const app = initializeApp(firebaseConfig);
 
 const database = getDatabase(app);
 
+export const auth = getAuth(app);
+
 // Get data from Firebase
 // Args are passed to get specific data from Firebase
 export const storeDB = async (args: string) => {
-    const snapshot = await get(ref(database, args));
-    const res = snapshot.val();
+    const dbRef = await get(ref(database, args));
+    const res = dbRef.val();
     return res;
+}
+
+export const updateDatabaseRecord = async (args: string, data: Product) =>{
+    const dbRef = ref(database, args);
+    await set(dbRef, data);
+}
+
+export const removeFromDatabase = async (args: string) => {
+    const dbRef = ref(database, args);
+    await set(dbRef, null);
+}
+
+export const placeOrderToDatabase = async (args: string, data: any) => {
+    const dbRef = ref(database, args);
+    await set(dbRef, data);
 }

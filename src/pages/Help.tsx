@@ -3,8 +3,8 @@ import { Grid, Typography } from "@mui/material";
 function Help(){
     return(
         <Grid margin="10vmin">
-            <Typography>
-                HELP ME
+            <Typography variant="h1">
+                Under construction.
             </Typography>
         </Grid>
     )

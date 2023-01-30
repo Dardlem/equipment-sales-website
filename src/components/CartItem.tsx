@@ -4,7 +4,6 @@ import fetchData from "../helpers/fetch";
 import { Product } from "../interfaces";
 import { Cancel } from "@mui/icons-material"
 import { useShoppingCart } from "../context/ShoppingCartContext";
-import DisplayCurrency from "../helpers/DisplayCurrency";
 
 type CartItemProps = {
     id: string,
@@ -38,9 +37,6 @@ function CartItem({id, quantity}: CartItemProps){
 
         setItemQuantity(id, parseInt(newValue, 10))
     }
-    const subTotal = useMemo(() => {
-        return quantity ? data.price * quantity : 0;
-    }, [quantity, data.price])
 
     return(
         <Card sx={{ margin: "20px 5px" }}>
@@ -63,13 +59,12 @@ function CartItem({id, quantity}: CartItemProps){
                             inputProps={{
                                 readOnly: false,
                                 min: 1,
-                                max: 2000,
+                                max: 20000,
                             }}
                             sx={{
                                 width: '100%'
                             }}
                             onChange={handleChange} />
-                        <Typography variant="body2">SubTotal: {DisplayCurrency(subTotal)}</Typography>
                     </Grid>
                     <Grid container direction="row" flexShrink="2" flexWrap="nowrap" alignItems="center">
                         <Box component="img" src={`${data.preview}`}

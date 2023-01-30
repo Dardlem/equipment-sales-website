@@ -12,36 +12,39 @@ function ProductPage(model: {product: Product}) {
         <Grid
             container
             direction="column"
-            width="90%"
-            margin="10vmin"
+            alignItems="center"
+            justifyContent="center"
+            margin={"100px"}
         >
             <Typography variant="h2">
                 {model.product.name}
             </Typography>
-            <Grid container direction="column" width="50%">
-                <Typography variant="body1" marginTop="2%" marginBottom="2%">
-                    {model.product.description}
-                </Typography>
-            </Grid>
-            <Grid container direction="column" width="20%">
-                <Box
-                    component="img"
-                    src={model.product.preview}
-                    maxHeight="30vmax"
-                    maxWidth="30vmax"
-                    borderRadius="25px"
-                />
-                <Button onClick={ () => {increaseItemQuantity(model.product.id)} }
-                    sx={{
-                        width: "auto",
-                        height: "auto"
-                    }}
-                >
-                    <Typography variant="body1" marginRight="5px" textTransform="uppercase">
-                        Add to quote
+            <Grid container direction={"row"} alignItems="center" justifyContent="center">
+                <Grid width={"50%"}>
+                    <Typography variant="body1">
+                        {model.product.description}
                     </Typography>
-                    <ShoppingCartIcon />
-                </Button>
+                </Grid>
+                <Grid container direction="column" width="50%" alignContent={"center"}>
+                    <Box
+                        component="img"
+                        src={model.product.preview}
+                        maxHeight="30vmax"
+                        maxWidth="30vmax"
+                        borderRadius="25px"
+                    />
+                    <Button onClick={ () => {increaseItemQuantity(model.product.id)} }
+                        sx={{
+                            width: "auto",
+                            height: "auto"
+                        }}
+                    >
+                        <Typography variant="body1" marginRight="5px" textTransform="uppercase">
+                            Add to quote
+                        </Typography>
+                        <ShoppingCartIcon />
+                    </Button>
+                </Grid>
             </Grid>
         </Grid>
     )

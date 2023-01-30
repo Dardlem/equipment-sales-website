@@ -1,18 +1,23 @@
 import { AppBar, Box, IconButton, Menu, Toolbar, Typography, MenuItem, Grid } from "@mui/material";
 import { Container } from "@mui/system";
 import * as React from "react";
-import AdbIcon from "@mui/icons-material/Adb"
+import SpaIcon from '@mui/icons-material/Spa';
 import MenuIcon from "@mui/icons-material/Menu"
 import { Link, NavLink } from "react-router-dom"
 import ShoppingCart from "@mui/icons-material/ShoppingCart"
 import { useShoppingCart } from "../context/ShoppingCartContext";
+import { Person } from "@mui/icons-material";
+import { auth } from "../helpers/firebase";
+import { useUser } from "../context/UserContext";
 
 const pages = ['Products', 'News', 'About', 'Help'];
 
 function Navbar() {
     const { openCart } = useShoppingCart();
+    const { logOut } = useUser();
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -22,35 +27,48 @@ function Navbar() {
         setAnchorElNav(null);
     }
 
+    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElUser(event.currentTarget);
+    }
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    }
+
+    const handleLogOut = () => {
+        logOut();
+        handleCloseNavMenu;
+        window.location.reload();
+    }
+
     let activeStyle = {
         textDecoration: "underline"
     }
 
-    let activeClassName = "underline";
+    React.useEffect(() => {}, [auth.currentUser])
 
     return(
         <>
-            <AppBar position="fixed">
+            <AppBar position="absolute">
                 <Container maxWidth="xl">
                     <Toolbar
                         disableGutters
                         variant="dense"
                     >
-                        <AdbIcon sx={{ display: { xs: 'none', md: 'flex'}, mr: 1}} />
+                        <SpaIcon sx={{ color: "rgb(60, 179, 113)", display: { xs: 'none', md: 'flex'}, mr: 1}} />
                         <Typography
                             variant="h6"
                             noWrap
-                            // component="a"
                             sx={{
                                 mr: 2,
                                 display: {xs: 'none', md: 'flex'},
-                                fontFamily: 'monospace',
+                                fontFamily: 'Roboto',
                                 fontWeight: 700,
                                 letterSpacing: '.3rem',
                                 color: 'inherit',
                                 textDecoration: 'none',
                             }}>
-                                <Link to={`/`}>LOGO</Link>
+                                <Link to={`/`}>SIA MAINSPRING</Link>
                         </Typography>
 
                         <Box sx={{ flexGrow: 1, display: {xs: 'flex', md: 'none' } }}>
@@ -88,7 +106,7 @@ function Navbar() {
                                 ))}
                             </Menu>
                         </Box>
-                        <AdbIcon sx={{ display: {xs: 'flex', md: 'none'}, mr: 1 }} />
+                        <SpaIcon sx={{ display: {xs: 'flex', md: 'none'}, mr: 1 }} />
                         <Typography
                             variant="h5"
                             noWrap
@@ -103,7 +121,7 @@ function Navbar() {
                                 textDecorations: 'none',
                             }}
                         >
-                            <Link to={'/'}>LOGO</Link>
+                            <Link to={'/'}>SIA MAINSPRING</Link>
                         </Typography>
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} >
                             <Grid container justifyContent="space-between">
@@ -121,9 +139,47 @@ function Navbar() {
                                     ))}
                                 </Box>
 
-                                <IconButton onClick={openCart} sx={{color: 'white'}}>
-                                        <ShoppingCart />
-                                </IconButton>
+                                <Grid justifyContent={"center"} marginTop={"8px"}>
+                                    <IconButton onClick={openCart} sx={{color: 'white'}}>
+                                            <ShoppingCart />
+                                    </IconButton>
+                                    <IconButton onClick={handleOpenUserMenu}>
+                                        <Person sx={{color: "white"}}/>
+                                    </IconButton>
+                                    <Menu open={Boolean(anchorElUser)}
+                                    sx={{ mt: '45px'}}
+                                    id="menu-appbar"
+                                    anchorEl={anchorElUser}
+                                    anchorOrigin={{ vertical: 'top', horizontal: 'right'}}
+                                    transformOrigin={{ vertical: 'top', horizontal: 'right'}}
+                                    onClose={handleCloseUserMenu}
+                                    >
+                                        {
+                                            auth.currentUser ?
+                                            <div>
+                                            <MenuItem onClick={handleCloseNavMenu}>
+                                                <NavLink to="/dashboard"><Typography>Admin Dashboard</Typography></NavLink>
+                                            </MenuItem>
+                                            <MenuItem onClick={handleCloseNavMenu}>
+                                                <NavLink to="/cms"><Typography>CMS</Typography></NavLink>
+                                            </MenuItem>
+                                            <MenuItem onClick={handleCloseNavMenu}>
+                                                <NavLink to="/orders"><Typography>Orders</Typography></NavLink>
+                                            </MenuItem>
+                                                <MenuItem onClick={handleLogOut}>
+                                                    <Typography>Log out</Typography>
+                                                </MenuItem>
+                                            </div>
+                                            :
+                                            <MenuItem onClick={handleCloseNavMenu}>
+                                                <NavLink to="login">
+                                                    <Typography>Log in</Typography>
+                                                </NavLink>
+                                            </MenuItem>
+                                        }
+                                    </Menu>
+                                </Grid>
+
                             </Grid>
                         </Box>
                     </Toolbar>

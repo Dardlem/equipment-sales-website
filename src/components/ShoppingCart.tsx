@@ -1,18 +1,12 @@
-import { Box, Button, Drawer, Grid, IconButton, Typography } from "@mui/material";
+import { Box, Button, Drawer, Grid, IconButton, TextField, Typography } from "@mui/material";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import { Close } from "@mui/icons-material"
 import CartItem from "./CartItem";
-import { useEffect, useState } from "react";
-import DisplayCurrency from "../helpers/DisplayCurrency";
 import { Product, ProductArray } from "../interfaces";
+import placeOrder from "../helpers/placeOrder";
+import { useState } from "react";
 
 const drawerWidth = 340;
-
-enum CURRENCY{
-    USD = "$",
-    EUR = "€",
-    UAH = "₴",
-}
 
 type CartItem = {
     id: string
@@ -25,32 +19,36 @@ type ShoppingCartProps = {
     data: ProductArray<Product>
 }
 
+type Order = {
+    id: string[],
+    quantity: number[]
+}
+
 function ShoppingCart({ isOpen, cartItems, data }: ShoppingCartProps ){
-    const [total, setTotal] = useState<number>(0)
-    const { closeCart } = useShoppingCart();
+    const { closeCart, removeAllFromCart } = useShoppingCart();
+    const [orderHasBeenPlaced, setOrderHasBeenPlaced] = useState<boolean>(false);
+    const [customerId, setCustomerId] = useState<string>("");
 
-    console.log(data);
-    let currentCurrency = CURRENCY.USD;
+    const isCartEmpty = cartItems.length === 0;
+    const isCustomerEmpty = customerId === "";
 
-    useEffect(() => {
-        setTotal(getTotal());
-    }, [cartItems])
+    const buttonEnabler = () => {
+        if (isCartEmpty || isCustomerEmpty) {
+            return true;
+        } else return false;
+    }
 
-    const isCartEmpty = cartItems.length === 0
-
-
-    const getTotal = () => {
-        let total = 0;
-        try {
-            return cartItems.reduce((total, cartItem) => {
-                return total + (cartItem.quantity ? data[cartItem.id].price * cartItem.quantity : 0);
-            }, 0);
-
-        } catch (e) {
-            console.log(e);
-        }
-        return total;
-    };
+    const handleRequestPlacement = () => {
+        const order: Order = cartItems.map((cartItem) => {
+            return {
+                id: cartItem.id,
+                quantity: cartItem.quantity
+            }
+        })
+        setOrderHasBeenPlaced(true);
+        placeOrder(customerId, order);
+        removeAllFromCart();
+    }
 
 
     return (
@@ -58,29 +56,46 @@ function ShoppingCart({ isOpen, cartItems, data }: ShoppingCartProps ){
             open={isOpen}
             anchor='right'>
             <Grid padding="10px" width={drawerWidth} direction="column" container>
-                <Box display="flex" justifyContent="space-between" paddingBottom="10px">
-                    <Typography variant="h4">
-                        Cart
-                    </Typography>
-                    <IconButton onClick={ closeCart }>
-                        <Close />
-                    </IconButton>
-                </Box>
-                <Box>
-                    {
-                        cartItems.map((cartItem) => {
-                            return <CartItem key={cartItem.id} id={cartItem.id} quantity={cartItem.quantity} />
-                        })
-                    }
-                </Box>
-                <Box>
-                    <Typography>
-                        Estimated price: {DisplayCurrency(total, currentCurrency)}
-                    </Typography>
-                </Box>
-                <Button disabled={isCartEmpty}>
-                    Get your offer
-                </Button>
+                {
+                    orderHasBeenPlaced ?
+                    <Grid container alignContent={"center"}>
+                        <Typography variant="h4">Your order has been placed!</Typography>
+                        <Button onClick={() => {setOrderHasBeenPlaced(false)}}>Ok</Button>
+                    </Grid>
+
+                    :
+
+                    <Grid container direction={"column"}>
+                        <Box display="flex" justifyContent="space-between" paddingBottom="10px">
+                            <Typography variant="h4">
+                                Cart
+                            </Typography>
+                            <IconButton onClick={ closeCart }>
+                                <Close />
+                            </IconButton>
+                        </Box>
+                        <Box>
+                            {
+                                cartItems.map((cartItem) => {
+                                    return <CartItem key={cartItem.id} id={cartItem.id} quantity={cartItem.quantity} />
+                                })
+                            }
+                        </Box>
+                        <TextField
+                            id="customer-id"
+                            type="text"
+                            sx = {{ margin: "10px 0px"}}
+                            label="Customer reference"
+                            value={customerId}
+                            inputProps={{ readOnly: false }}
+                            onChange={(event) => setCustomerId(event.target.value)}
+                        />
+                        <Button disabled={buttonEnabler()} onClick={handleRequestPlacement}>
+                            Place order
+                        </Button>
+                    </Grid>
+                }
+
             </Grid>
         </Drawer>
     )
