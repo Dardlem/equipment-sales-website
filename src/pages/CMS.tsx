@@ -38,7 +38,7 @@ function CMS(model: {data: ProductArray<Product>}) {
     if(auth.currentUser === null){
         return(
             <>
-                <Typography textAlign={"center"}>FORBIDDEN</Typography>
+                <Typography textAlign={"center"}>Заборонено</Typography>
             </>
             );
     }
@@ -53,7 +53,7 @@ function CMS(model: {data: ProductArray<Product>}) {
                     <List>
                     <Button onClick={handleNewProduct}>
                         <ListItem key="add-item">
-                            <Typography>Add product</Typography>
+                            <Typography>Новий продукт</Typography>
                         </ListItem>
                     </Button>
                     <Divider />

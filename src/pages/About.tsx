@@ -5,7 +5,7 @@ function About(){
         <>
             <Box margin="10vmin">
                 <Typography variant="h1">
-                    Under construction.
+                    У розробці.
                 </Typography>
             </Box>
         </>

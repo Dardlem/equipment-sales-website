@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../helpers/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 
 function Login(){
 
@@ -16,7 +16,7 @@ function Login(){
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                navigate("/CMS");
+                navigate("/dashboard");
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -31,9 +31,10 @@ function Login(){
                 auth.currentUser === null ?
 
                 <Grid container direction="column" alignItems={"center"} justifyContent="center" height="100vh">
+                    <Typography variant="h4" textAlign={"center"}>Адмін-доступ</Typography>
                     <TextField sx={{ margin: "10px" }} label={"E-mail"} type="email" required value={email} onChange={(e) => setEmail(e.target.value)}/>
-                    <TextField sx={{ margin: "10px" }} label={"Password"} type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
-                    <Button onClick={onLogin}>Login</Button>
+                    <TextField sx={{ margin: "10px" }} label={"Пароль"} type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <Button onClick={onLogin}>Увійти</Button>
                 </Grid>
 
                 : navigate("/dashboard")

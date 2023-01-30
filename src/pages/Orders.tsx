@@ -33,7 +33,6 @@ function Orders(){
     const [data, setData] = useState<any>();
     const navigate = useNavigate();
 
-
     useEffect(() => {
         const promise = () => {
             if(currentCustomer === ''){
@@ -45,49 +44,47 @@ function Orders(){
 
         promise().then((value) => {setData(value)});
 
-    }, [currentCustomer, currentOrder])
+    }, [currentCustomer, currentOrder, data])
 
     const orderDisplay = useMemo(() => {
-        if(currentOrder === ''){
-            return <Typography>Order not selected</Typography>
-        } else {
-            return <OrderDisplay orderId={data[currentOrder]}/>
+        if(currentOrder !== ''){
+            return <OrderDisplay order={data[currentOrder]} orderId={currentOrder} customerId={currentCustomer} />
         }
-    }, [currentOrder])
+    }, [currentOrder]);
 
     return(
         <>
             {
                 auth.currentUser === null ? navigate("/login") :
 
+                data === undefined ? <Typography margin={"10vmin"} variant="h1">Завантаження...</Typography> :
+
                 <Grid marginTop={"5vmin"} margin={"0 2vmin"}>
-                    <Typography variant={"h1"} textAlign={"left"}>Orders</Typography>
+                    <Typography variant={"h1"} textAlign={"left"}>Замовлення</Typography>
                     <Grid container>
                         <Grid container direction={"row"} width={"100%"} flexWrap={"nowrap"}>
                             <Box>
                                 <List>
-                                    <ListItem><Typography variant={"body1"}>Selected Customer: {currentCustomer}</Typography></ListItem>
-                                    <ListItem><Typography variant={"body1"}>Selected Order No.: {currentOrder}</Typography></ListItem>
+                                    <ListItem><Typography variant={"body1"}>Обраний клієнт: {currentCustomer}</Typography></ListItem>
+                                    <ListItem><Typography variant={"body1"}>Обране замовлення: {currentOrder}</Typography></ListItem>
                                     <Button onClick={() => {
                                         setCurrentCustomer('');
                                         setCurrentOrder('');
                                     }}>
-                                        Clear selection
+                                        Очистити вибірку
                                     </Button>
                                 </List>
                                 <Divider />
                                 <Grid container direction="column" width="100%">
                                     {
-                                        data === null ? <Typography>No orders found</Typography> :
+                                        data === null ? <Typography>Заказів не знайдено</Typography> :
                                         Object.keys(data).map((key: any, index: number) => {
                                             return(
                                                 <Button key={index} onClick={() => {
                                                     if(currentCustomer === ''){
                                                         setCurrentCustomer(key);
-                                                        console.log("customer set: ", key);
                                                     } else {
                                                         setCurrentOrder(key);
-                                                        console.log("order set: ", key);
                                                     }
                                                 }}>
                                                     <ListItem>
@@ -101,7 +98,9 @@ function Orders(){
                             </Box>
                         <Divider orientation="vertical" />
                             <Box>
-                                {orderDisplay}
+                                {
+                                    currentOrder === '' ? null : orderDisplay
+                                }
                             </Box>
                         </Grid>
                     </Grid>

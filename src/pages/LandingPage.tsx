@@ -13,7 +13,7 @@ function LandingPage() {
                             SIA Mainspring
                         </Typography>
                         <Typography variant="body1" fontWeight={"400"} color="white" marginTop={"5px"} textAlign={"center"}>
-                            Bring light to your crops, and growth to your business
+                            Світло вашому урожаю і зростання вашому бізнесу
                         </Typography>
                     </Grid>
                 </Grid>

@@ -4,7 +4,7 @@ function Help(){
     return(
         <Grid margin="10vmin">
             <Typography variant="h1">
-                Under construction.
+                У розробці.
             </Typography>
         </Grid>
     )

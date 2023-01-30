@@ -38,15 +38,24 @@ function ShoppingCart({ isOpen, cartItems, data }: ShoppingCartProps ){
         } else return false;
     }
 
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const regex = /^$|^[\sa-zA-Z0-9\u0400-\u04FF]+$/;
+
+        if(event.target.value.match(regex)){
+            setCustomerId(event.target.value)
+        }
+
+    }
+
     const handleRequestPlacement = () => {
-        const order: Order = cartItems.map((cartItem) => {
+        const order: any = cartItems.map((cartItem) => {
             return {
                 id: cartItem.id,
                 quantity: cartItem.quantity
             }
         })
         setOrderHasBeenPlaced(true);
-        placeOrder(customerId, order);
+        placeOrder(customerId.replace(/\s/g, ''), order);
         removeAllFromCart();
     }
 
@@ -59,8 +68,8 @@ function ShoppingCart({ isOpen, cartItems, data }: ShoppingCartProps ){
                 {
                     orderHasBeenPlaced ?
                     <Grid container alignContent={"center"}>
-                        <Typography variant="h4">Your order has been placed!</Typography>
-                        <Button onClick={() => {setOrderHasBeenPlaced(false)}}>Ok</Button>
+                        <Typography variant="h4">Ваше замовлення розміщено!</Typography>
+                        <Button onClick={() => {setOrderHasBeenPlaced(false)}}>Ок</Button>
                     </Grid>
 
                     :
@@ -68,7 +77,7 @@ function ShoppingCart({ isOpen, cartItems, data }: ShoppingCartProps ){
                     <Grid container direction={"column"}>
                         <Box display="flex" justifyContent="space-between" paddingBottom="10px">
                             <Typography variant="h4">
-                                Cart
+                                Замовлення
                             </Typography>
                             <IconButton onClick={ closeCart }>
                                 <Close />
@@ -81,17 +90,23 @@ function ShoppingCart({ isOpen, cartItems, data }: ShoppingCartProps ){
                                 })
                             }
                         </Box>
-                        <TextField
-                            id="customer-id"
-                            type="text"
-                            sx = {{ margin: "10px 0px"}}
-                            label="Customer reference"
-                            value={customerId}
-                            inputProps={{ readOnly: false }}
-                            onChange={(event) => setCustomerId(event.target.value)}
-                        />
+                        {
+                            isCartEmpty ? <Typography variant="h6">Добавте продукт</Typography> :
+
+                            <TextField
+                                id="customer-id"
+                                type="text"
+                                sx = {{ margin: "10px 0px"}}
+                                label="Посилання на ваш проект"
+                                value={customerId}
+                                inputProps={{ readOnly: false }}
+                                onChange={handleChange}
+                            />
+
+                        }
+
                         <Button disabled={buttonEnabler()} onClick={handleRequestPlacement}>
-                            Place order
+                            Оформити замовлення
                         </Button>
                     </Grid>
                 }

@@ -6,11 +6,35 @@ import MenuIcon from "@mui/icons-material/Menu"
 import { Link, NavLink } from "react-router-dom"
 import ShoppingCart from "@mui/icons-material/ShoppingCart"
 import { useShoppingCart } from "../context/ShoppingCartContext";
-import { Person } from "@mui/icons-material";
+import { Login, Logout, Person } from "@mui/icons-material";
 import { auth } from "../helpers/firebase";
 import { useUser } from "../context/UserContext";
 
-const pages = ['Products', 'News', 'About', 'Help'];
+interface Pages {
+    name: string,
+    path: string,
+}
+
+// const pages = ['Продукти', 'Новини', 'Про нас', 'Допомога'];
+
+const pages: Pages[] = [
+    {
+        name: "Продукти",
+        path: "products",
+    },
+    {
+        name: "Новини",
+        path: "news",
+    },
+    {
+        name: "Про нас",
+        path: "about",
+    },
+    {
+        name: "Допомога",
+        path: "help",
+    }
+]
 
 function Navbar() {
     const { openCart } = useShoppingCart();
@@ -98,9 +122,9 @@ function Navbar() {
                                 onClose={handleCloseNavMenu}
                                 >
                                 {pages.map((page) => (
-                                    <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                    <MenuItem key={page.path} onClick={handleCloseNavMenu}>
                                         <NavLink to={`/${page}`}>
-                                            <Typography textAlign={"center"}>{page}</Typography>
+                                            <Typography textAlign={"center"}>{page.name}</Typography>
                                         </NavLink>
                                     </MenuItem>
                                 ))}
@@ -130,11 +154,11 @@ function Navbar() {
                                         <NavLink
                                             style={({ isActive }) =>
                                                 isActive ? activeStyle : undefined}  ////STYLING FOR ACTIVE LINKS
-                                            key={page}
-                                            to={`/${page}`}
+                                            key={page.path}
+                                            to={`/${page.path}`}
                                             onClick={handleCloseNavMenu}
                                         >
-                                        <Typography sx={{ my: 2, color: 'white', paddingInline: "1vmin"}}>{page}</Typography>
+                                        <Typography sx={{ my: 2, color: 'white', paddingInline: "1vmin"}}>{page.name}</Typography>
                                         </NavLink>
                                     ))}
                                 </Box>
@@ -144,7 +168,11 @@ function Navbar() {
                                             <ShoppingCart />
                                     </IconButton>
                                     <IconButton onClick={handleOpenUserMenu}>
-                                        <Person sx={{color: "white"}}/>
+                                        {
+                                            auth.currentUser ?
+                                            <Person sx={{color: "white"}}/> :
+                                            <Login sx={{ color: "white" }} />
+                                        }
                                     </IconButton>
                                     <Menu open={Boolean(anchorElUser)}
                                     sx={{ mt: '45px'}}
@@ -158,22 +186,24 @@ function Navbar() {
                                             auth.currentUser ?
                                             <div>
                                             <MenuItem onClick={handleCloseNavMenu}>
-                                                <NavLink to="/dashboard"><Typography>Admin Dashboard</Typography></NavLink>
+                                                <NavLink to="/dashboard"><Typography>Панель адміністратора</Typography></NavLink>
                                             </MenuItem>
                                             <MenuItem onClick={handleCloseNavMenu}>
                                                 <NavLink to="/cms"><Typography>CMS</Typography></NavLink>
                                             </MenuItem>
                                             <MenuItem onClick={handleCloseNavMenu}>
-                                                <NavLink to="/orders"><Typography>Orders</Typography></NavLink>
+                                                <NavLink to="/orders"><Typography>Замовлення</Typography></NavLink>
                                             </MenuItem>
                                                 <MenuItem onClick={handleLogOut}>
-                                                    <Typography>Log out</Typography>
+                                                    <Grid container alignContent={"center"}>
+                                                        <Typography>Вийти</Typography>
+                                                    </Grid>
                                                 </MenuItem>
                                             </div>
                                             :
                                             <MenuItem onClick={handleCloseNavMenu}>
                                                 <NavLink to="login">
-                                                    <Typography>Log in</Typography>
+                                                    <Typography>Увійти</Typography>
                                                 </NavLink>
                                             </MenuItem>
                                         }

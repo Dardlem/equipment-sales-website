@@ -58,7 +58,7 @@ function CartItem({id, quantity}: CartItemProps){
                             value={quantity}
                             inputProps={{
                                 readOnly: false,
-                                min: 1,
+                                min: 50,
                                 max: 20000,
                             }}
                             sx={{

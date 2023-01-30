@@ -41,7 +41,7 @@ function Products(model: {data: ProductArray<Product>}){
         <>
             <Box margin="10vmin">
                 <Typography variant="h1">
-                    Loading products...
+                    Завантаження продуктів...
                 </Typography>
             </Box>
         </>

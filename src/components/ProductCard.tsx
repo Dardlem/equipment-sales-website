@@ -7,7 +7,7 @@ import { ProductCard } from "../interfaces";
 function ProductCard(props: ProductCard){
 
     return(
-        <Link to={`/Products/${props.id}`}>
+        <Link to={`/products/${props.id}`}>
             <Card
                 sx={{
                     width: '40vmin',

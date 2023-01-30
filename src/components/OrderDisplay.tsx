@@ -1,20 +1,24 @@
-import { Box, Checkbox, Grid, Input, TextField, Typography } from "@mui/material";
+import { Box, Button, Checkbox, Grid, Input, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import fetchData from "../helpers/fetch";
+import { removeFromDatabase } from "../helpers/firebase";
 import { Product } from "../interfaces";
 import Orders from "../pages/Orders";
 import Order from "../pages/Orders";
 
 
 
-function OrderDisplay(orderId: Orders){
+function OrderDisplay(model: {order: Orders, orderId: string, customerId: string}){
     const [data, setData] = useState<Array<Order>>([]);
     const [amount, setAmount] = useState<any>();
     const [productList, setProductList] = useState<Array<any>>([]);
 
     useEffect(() => {
-        setData(orderId.orderId as unknown as Array<any>);
-        console.log(data[0]);
+        setData([]);
+        setProductList([]);
+        setAmount([]);
+
+        setData(model.order as unknown as Array<any>);
 
         let temp: Array<Promise<any>> = [];
         let temp2: Array<number> = [];
@@ -32,24 +36,26 @@ function OrderDisplay(orderId: Orders){
 
         filtered.map((promise) => {
             promise.then((value) => {
-                setProductList((prev) => [...prev, value]);
+                if(productList.find((item) => item.id === value.id) === undefined){
+                    setProductList((prev) => [...prev, value]);
+                }
             })
         })
 
-        console.log(productList);
+    }, [model.order, data])
 
-    }, [data])
-
-
-    console.log(orderId)
+    const handleRemove = () => {
+        removeFromDatabase('orders/' + model.customerId + '/' + model.orderId + '/');
+        window.location.reload();
+    }
 
     return(
         <Grid container justifyContent={"center"} margin={"2vmin"}>
-            <Typography variant="h2">Order display</Typography>
+            <Typography variant="h2" margin={"100px"}>Замовлення</Typography>
             <Grid container direction="column">
                 {
                     productList.map((value: Product, index: number) => {
-                    console.log(productList);
+                        console.log(productList); console.log(value);
                         return(
                             <Grid key={index} container direction="row" margin={"10px"}>
                                 <Box sx={{ border: "black" }} borderRadius="20px">
@@ -60,6 +66,7 @@ function OrderDisplay(orderId: Orders){
                         )
                     })
                 }
+                <Button color="error" onClick={handleRemove}>Видалити це замовлення</Button>
             </Grid>
         </Grid>
     )

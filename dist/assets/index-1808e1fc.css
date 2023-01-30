@@ -1,0 +1,1 @@
+body{margin:50px 0 0;padding:0}:link{text-decoration:none}:visited{color:inherit}@keyframes fade-transition{0%{opacity:0}to{opacity:.75}}#backgroundVideo{filter:brightness(30%) blur(0px);animation-duration:3s;animation-name:fade-transition;animation-fill-mode:forwards}

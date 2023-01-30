@@ -28,7 +28,6 @@ export function UserProvider({ children }:UserProviderProps){
     const logOut = () => {
         setIsLoggedIn(false);
         auth.signOut();
-        console.log("User logged out");
     }
 
     return(

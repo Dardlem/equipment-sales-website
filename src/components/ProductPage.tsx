@@ -6,7 +6,7 @@ import { useShoppingCart } from "../context/ShoppingCartContext";
 
 
 function ProductPage(model: {product: Product}) {
-    const { increaseItemQuantity } = useShoppingCart();
+    const { addToCart } = useShoppingCart();
 
     return(
         <Grid
@@ -33,14 +33,14 @@ function ProductPage(model: {product: Product}) {
                         maxWidth="30vmax"
                         borderRadius="25px"
                     />
-                    <Button onClick={ () => {increaseItemQuantity(model.product.id)} }
+                    <Button onClick={ () => {addToCart(model.product.id)} }
                         sx={{
                             width: "auto",
                             height: "auto"
                         }}
                     >
                         <Typography variant="body1" marginRight="5px" textTransform="uppercase">
-                            Add to quote
+                            Додати до замовлення
                         </Typography>
                         <ShoppingCartIcon />
                     </Button>

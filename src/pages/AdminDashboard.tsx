@@ -8,7 +8,7 @@ function AdminDashboard() {
     {
         return(
             <>
-                <Typography textAlign={"center"}>FORBIDDEN</Typography>
+                <Typography textAlign={"center"}>Заборонено</Typography>
                 {navigate("/login")}
             </>
         )
@@ -16,13 +16,13 @@ function AdminDashboard() {
 
     return(
         <Grid marginTop={"200px"}>
-            <Typography textAlign={"center"}>Admin dashboard</Typography>
+            <Typography textAlign={"center"}>Панель адміністратора</Typography>
             <Grid container justifyContent={"center"} alignContent={"center"}>
                 <Button>
-                    <Link to="/CMS">CMS</Link>
+                    <Link to="/cms">CMS</Link>
                 </Button>
                 <Button>
-                    <Link to="/orders">Orders</Link>
+                    <Link to="/orders">Замовлення</Link>
                 </Button>
             </Grid>
         </Grid>
